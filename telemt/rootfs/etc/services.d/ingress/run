@@ -1,0 +1,5 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Serve the status page for HA Ingress.
+# ==============================================================================
+exec darkhttpd /opt/ha-telemt/web --port 8099 --addr 0.0.0.0 --no-listing

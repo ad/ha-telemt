@@ -1,0 +1,6 @@
+#!/usr/bin/with-contenv bashio
+# ==============================================================================
+# Start Telemt.
+# ==============================================================================
+bashio::log.info "Starting Telemt..."
+exec telemt /etc/telemt/telemt.toml

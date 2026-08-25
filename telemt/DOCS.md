@@ -38,7 +38,7 @@ MTProto-прокси для Telegram в режиме WEB. TLS терминиру
 `https-lanes` — независимые потоки, быстрее. `https` — старое
 сериализованное поведение.
 
-### `log_level` (по умолчанию `normal`)
+### `telemt_log_level` (по умолчанию `normal`)
 `debug` | `verbose` | `normal` | `silent`.
 
 ### `trusted_proxy_cidrs` (по умолчанию `172.30.32.0/23`)

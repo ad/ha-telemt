@@ -18,6 +18,10 @@ HOST=$(bashio::config 'host')
 # ----- secret: option > persisted > generated -----
 if bashio::config.has_value 'secret'; then
     SECRET=$(bashio::config 'secret' | tr '[:upper:]' '[:lower:]')
+    # The link carries a "dd" secret-mode prefix; the secret itself is 32 hex chars.
+    if [[ ${#SECRET} -eq 34 ]]; then
+        SECRET="${SECRET#dd}"
+    fi
 elif [[ -s "${SECRET_FILE}" ]]; then
     SECRET=$(cat "${SECRET_FILE}")
 else

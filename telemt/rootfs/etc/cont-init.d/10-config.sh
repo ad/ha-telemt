@@ -21,7 +21,7 @@ if bashio::config.has_value 'secret'; then
 elif [[ -s "${SECRET_FILE}" ]]; then
     SECRET=$(cat "${SECRET_FILE}")
 else
-    SECRET=$(openssl rand -hex 16)
+    SECRET=$(od -An -tx1 -N16 /dev/urandom | tr -d " \n")
     bashio::log.info "Generated a new WEB secret."
 fi
 echo "${SECRET}" > "${SECRET_FILE}"

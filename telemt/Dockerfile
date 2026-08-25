@@ -13,7 +13,6 @@ RUN apk add --no-cache --no-progress \
         ca-certificates \
         curl \
         darkhttpd \
-        openssl \
     && case "${BUILD_ARCH}" in \
         amd64) asset="telemt-x86_64-linux-musl.tar.gz" ;; \
         aarch64) asset="telemt-aarch64-linux-musl.tar.gz" ;; \

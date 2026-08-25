@@ -1,6 +1,6 @@
 ---
 name: Telemt
-version: "0.1.5"
+version: "0.1.6"
 slug: telemt
 description: Telemt MTProto WEB proxy for Telegram, behind Caddy/NGINX TLS termination
 url: https://github.com/ad/ha-telemt

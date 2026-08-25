@@ -40,7 +40,9 @@ MTProto-прокси для Telegram в режиме WEB. TLS терминиру
 сериализованное поведение.
 
 ### `telemt_log_level` (по умолчанию `normal`)
-`debug` | `verbose` | `normal` | `silent`.
+`debug` | `verbose` | `normal` | `silent`. У самого Telemt `silent` означает
+«только warn и error», поэтому аддон дополнительно ставит `RUST_LOG=error`
+и на этом уровне остаются лишь ошибки.
 
 ### `trusted_proxy_cidrs` (по умолчанию `172.30.32.0/23`)
 Откуда приходят запросы от TLS-терминатора. `172.30.32.0/23` — сеть аддонов

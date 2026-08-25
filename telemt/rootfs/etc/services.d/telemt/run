@@ -2,5 +2,10 @@
 # ==============================================================================
 # Start Telemt.
 # ==============================================================================
+# Telemt's "silent" log level still prints warnings; only RUST_LOG goes lower.
+if [[ "$(bashio::config 'telemt_log_level')" == "silent" ]]; then
+    export RUST_LOG=error
+fi
+
 bashio::log.info "Starting Telemt..."
 exec telemt /etc/telemt/telemt.toml

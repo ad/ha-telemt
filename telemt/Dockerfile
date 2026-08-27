@@ -6,7 +6,7 @@ FROM ${BUILD_FROM}
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 ARG BUILD_ARCH
-ARG TELEMT_VERSION=3.5.2
+ARG TELEMT_VERSION=3.5.4
 
 # hadolint ignore=DL3018
 RUN apk add --no-cache --no-progress \

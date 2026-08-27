@@ -4,7 +4,7 @@ version: "3.5.4"
 slug: telemt
 description: Telemt MTProto WEB proxy for Telegram, behind Caddy/NGINX TLS termination
 url: https://github.com/ad/ha-telemt
-image: "ghcr.io/ad/telemt-{arch}"
+image: "ghcr.io/ad/{arch}-telemt"
 arch:
   - aarch64
   - amd64

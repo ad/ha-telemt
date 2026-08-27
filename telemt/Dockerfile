@@ -33,24 +33,3 @@ EXPOSE 18080
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
     CMD pidof telemt >/dev/null || exit 1
-
-ARG BUILD_DATE
-ARG BUILD_DESCRIPTION
-ARG BUILD_NAME
-ARG BUILD_REF
-ARG BUILD_REPOSITORY
-ARG BUILD_VERSION
-
-LABEL \
-    io.hass.name="${BUILD_NAME}" \
-    io.hass.description="${BUILD_DESCRIPTION}" \
-    io.hass.arch="${BUILD_ARCH}" \
-    io.hass.type="addon" \
-    io.hass.version="${BUILD_VERSION}" \
-    maintainer="ad <unsecuredregister@gmail.com>" \
-    org.opencontainers.image.title="${BUILD_NAME}" \
-    org.opencontainers.image.description="${BUILD_DESCRIPTION}" \
-    org.opencontainers.image.source="${BUILD_REPOSITORY}" \
-    org.opencontainers.image.revision="${BUILD_REF}" \
-    org.opencontainers.image.created="${BUILD_DATE}" \
-    org.opencontainers.image.version="${BUILD_VERSION}"

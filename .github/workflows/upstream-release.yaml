@@ -17,6 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # Addon version == pinned Telemt version. Addon-only changes are released by
+      # hand-bumping a fourth component (3.5.4 -> 3.5.4.1); the next upstream
+      # release resets it back to a plain three-component Telemt version.
       - id: check
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

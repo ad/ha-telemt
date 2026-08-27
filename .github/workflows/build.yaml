@@ -3,6 +3,12 @@ name: Build
 on:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      ref:
+        description: Commit/ref to build (defaults to the triggering commit)
+        type: string
+        required: false
+        default: ""
   push:
     branches:
       - main
@@ -24,6 +30,8 @@ jobs:
       version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref || github.sha }}
 
       - id: matrix
         uses: home-assistant/builder/actions/prepare-multi-arch-matrix@2026.03.2
@@ -47,6 +55,8 @@ jobs:
       matrix: ${{ fromJSON(needs.init.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.ref || github.sha }}
 
       - uses: home-assistant/builder/actions/build-image@2026.03.2
         with:

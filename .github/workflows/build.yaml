@@ -1,0 +1,39 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    branches:
+      - main
+    paths:
+      - telemt/**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    strategy:
+      matrix:
+        arch:
+          - aarch64
+          - amd64
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: home-assistant/builder@2026.06.0
+        with:
+          args: |
+            --${{ matrix.arch }} \
+            --target /data/telemt \
+            --image "telemt-{arch}" \
+            --docker-hub "ghcr.io/${{ github.repository_owner }}" \
+            --addon

@@ -11,10 +11,12 @@ permissions:
 jobs:
   bump:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.check.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - name: Bump to latest telemt release
+      - id: check
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -37,6 +39,28 @@ jobs:
           git commit -am "telemt ${latest}"
           git push
 
-          gh release create "$latest" \
-            --title "$latest" \
-            --notes "Upstream: https://github.com/telemt/telemt/releases/tag/${latest}"
+          echo "version=${latest}" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: bump
+    if: needs.bump.outputs.version != ''
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/build.yaml
+
+  release:
+    needs:
+      - bump
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ needs.bump.outputs.version }}
+        run: |
+          gh release create "$VERSION" \
+            --title "$VERSION" \
+            --notes "Upstream: https://github.com/telemt/telemt/releases/tag/${VERSION}"

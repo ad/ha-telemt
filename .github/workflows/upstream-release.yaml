@@ -1,0 +1,42 @@
+name: Upstream release check
+
+on:
+  schedule:
+    - cron: "17 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bump to latest telemt release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          latest=$(gh release view --repo telemt/telemt --json tagName -q .tagName)
+          current=$(sed -n 's/^ARG TELEMT_VERSION=//p' telemt/Dockerfile)
+          echo "current=$current latest=$latest"
+
+          newest=$(printf '%s\n%s\n' "$current" "$latest" | sort -V | tail -n1)
+          if [ "$latest" = "$current" ] || [ "$newest" != "$latest" ]; then
+            echo "Nothing to do."
+            exit 0
+          fi
+
+          sed -i "s/^ARG TELEMT_VERSION=.*/ARG TELEMT_VERSION=${latest}/" telemt/Dockerfile
+          sed -i "s/^version: .*/version: \"${latest}\"/" telemt/config.yaml
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "telemt ${latest}"
+          git push
+
+          gh release create "$latest" \
+            --title "$latest" \
+            --notes "Upstream: https://github.com/telemt/telemt/releases/tag/${latest}"

@@ -1,6 +1,6 @@
 ---
 name: Telemt
-version: "0.1.6"
+version: "0.1.7"
 slug: telemt
 description: Telemt MTProto WEB proxy for Telegram, behind Caddy/NGINX TLS termination
 url: https://github.com/ad/ha-telemt
@@ -33,7 +33,7 @@ schema:
   host: "str"
   public_ip: "str?"
   secret: "match(^((dd)?[0-9a-fA-F]{32})?$)?"
-  carrier: "list(https|https-lanes)?"
+  carrier: "list(https|https-lanes|websocket|websocket-lanes)?"
   telemt_log_level: "list(debug|verbose|normal|silent)?"
   trusted_proxy_cidrs:
     - "str"
